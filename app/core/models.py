@@ -40,3 +40,26 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    
+
+    def __str__(self) -> str:
+        return self.name
+    
+
+class Product(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=20, decimal_places=2)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    in_stock =models.BooleanField(default=True)
+    stock_qty=models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.name
