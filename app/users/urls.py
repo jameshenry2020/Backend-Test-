@@ -4,7 +4,7 @@ from .views import UserRegistrationEndpoint
 
 
 urlpatterns =[
-    path('signup', UserRegistrationEndpoint.as_view()),
-    path('login', TokenObtainPairView.as_view()),
+    path('signup', UserRegistrationEndpoint.as_view(), name='signup'),
+    path('login', TokenObtainPairView.as_view(), name='login'),
     path('refresh/token', TokenRefreshView.as_view())
 ]
