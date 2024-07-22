@@ -63,3 +63,23 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+class CartItem(models.Model):
+    """for user to select product and quantity of that specific product. """
+    user = models.ForeignKey(User, related_name="carts", on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity= models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_ordered=models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.name}-cart-items"
+
+class Order(models.Model):
+    user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
+    orderitems = models.ManyToManyField(CartItem)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.name}-orders"
